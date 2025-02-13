@@ -1,0 +1,40 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  DOTNET_VERSION: "8.0"
+  RENDER_API_KEY: "Senin Render API Anahtarın" # Render API anahtarını GitLab'da sakla
+  RAILWAY_PROJECT_ID: "Senin Railway Proje ID" # Railway için
+  CONNECTION_STRING: "Host=your-db-host;Port=5432;Database=your-db-name;Username=your-user;Password=your-password;"
+
+before_script:
+  - echo "Using .NET version $DOTNET_VERSION"
+
+test_backend:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:8.0
+  script:
+    - cd backend-employee-management
+    - dotnet restore
+    - dotnet test
+
+build_backend:
+  stage: build
+  image: mcr.microsoft.com/dotnet/sdk:8.0
+  script:
+    - cd backend-employee-management
+    - dotnet publish -c Release -o out
+  artifacts:
+    paths:
+      - backend-employee-management/out
+
+deploy_backend:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - echo "Deploying to Render..."
+    - curl -X POST "https://api.render.com/deploy" -H "Authorization: Bearer $RENDER_API_KEY"
+  only:
+    - main

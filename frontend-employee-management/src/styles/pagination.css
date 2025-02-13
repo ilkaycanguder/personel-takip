@@ -1,0 +1,41 @@
+/* Pagination */
+.pagination-container {
+  position: fixed;
+  bottom: 0;
+  width: 98.5%;
+  padding: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  z-index: 1000; /* Üst üste gelmemesi için z-index ekleyin */
+}
+.pagination {
+  display: flex;
+  gap: 5px; /* Butonlar arasındaki boşluk */
+}
+.pagination-btn {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.pagination-btn:hover {
+  background-color: #f1f1f1;
+  border-color: #ccc;
+}
+
+.pagination-btn.prev,
+.pagination-btn.next {
+  font-weight: bold;
+}
+
+.pagination-btn:disabled {
+  background-color: #e0e0e0;
+  border-color: #ccc;
+  cursor: not-allowed;
+}

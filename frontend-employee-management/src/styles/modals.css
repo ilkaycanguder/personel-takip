@@ -1,0 +1,59 @@
+/* Modals */
+.modal-header {
+  background: #007bff; /* Soft mavi tonları */
+  color: white;
+  border-bottom: none; /* Alt sınırı kaldır */
+  padding: 1rem 1.5rem; /* Yastıklı ve genişletilmiş üst ve yan boşluklar */
+}
+
+.modal-header button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 1.25rem; /* Büyük ve okunaklı kapama butonu */
+}
+
+/* Modal Gövdesi */
+.modal-body {
+  background: #f9f9f9; /* Soft gri arka plan */
+  padding: 2rem; /* Genişletilmiş padding */
+  color: #333; /* Koyu gri metin rengi */
+}
+
+/* Modal İçeriği */
+.modal-content {
+  background: #ffffff; /* Beyaz arka plan */
+  border-radius: 8px; /* Yumuşak köşeler */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+}
+
+/* Modal Footer */
+.modal-footer.modal-footer-custom {
+  background: #f1f1f1; /* Soft gri arka plan */
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem; /* Butonlar arasında boşluk */
+  padding: 1rem 1.5rem; /* Padding */
+}
+
+.modal-footer {
+  border-top: none !important; /* Üst sınırı kaldır */
+}
+
+.modal-footer button {
+  font-size: 1rem; /* Buton metin boyutu */
+  transition: color 0.3s, background-color 0.3s; /* Geçiş efekti */
+}
+
+/* Modal Açıkken Gösterim */
+.modal-open::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* Daha açık koyu arka plan */
+  backdrop-filter: blur(6px); /* Daha belirgin bulanıklık */
+  z-index: 1040;
+}

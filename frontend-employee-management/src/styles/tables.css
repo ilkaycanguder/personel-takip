@@ -1,0 +1,18 @@
+/* Tables */
+.table {
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+.table td,
+.table th {
+  vertical-align: middle;
+  min-width: 120px;
+  text-align: center;
+}
+.table tr:hover {
+  background-color: #e3f2fd;
+}
+.table td {
+  cursor: pointer;
+  padding: 0.75rem;
+}

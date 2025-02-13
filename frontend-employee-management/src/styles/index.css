@@ -1,0 +1,128 @@
+/* General Styles */
+:root {
+  font-family: "Inter", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #e3f2fd;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e3f2fd, #cce7ff);
+  color: rgba(0, 0, 0, 0.87);
+}
+
+/* Typography */
+h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+/* Layout */
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.navbar-custom {
+  background-color: #001d36;
+}
+.navbar-custom .nav-item {
+  margin: 0 10px;
+}
+.navbar-brand-custom {
+  font-weight: bold !important;
+  font-size: 1.75rem;
+}
+.nav-link-custom {
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.nav-link-custom:hover {
+  background-color: #e2e2e2;
+  color: #000000 !important;
+}
+.main-content {
+  flex: 1;
+  background-color: #e2e2e2;
+}
+
+/* Input Groups */
+.input-group-custom {
+  margin-bottom: 1.5rem;
+}
+.input-icon {
+  background-color: #ffffff;
+}
+input::placeholder,
+select {
+  color: #6c757d;
+  font-style: italic;
+}
+input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* User Info */
+.user-info {
+  margin-bottom: 1.5rem;
+}
+.user-info p {
+  margin-bottom: 0.5rem;
+}
+.user-info .info-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+.info-item strong {
+  display: block;
+  color: #555;
+  font-size: 0.9rem;
+}
+.info-item {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-bottom: 1px solid #eaeaea;
+}
+.info-item span {
+  font-size: 1rem;
+  color: #777;
+}
+
+.draggable-item {
+  transition: transform 0.2s ease-in-out;
+}
+.draggable-item:hover {
+  transform: scale(1.05); /* Grows the item by 5% on hover */
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .column {
+    width: 100% !important;
+    margin-bottom: 10px;
+  }
+  .job-container {
+    padding: 0;
+  }
+  .modal-body,
+  .modal-footer {
+    padding: 15px;
+  }
+  .draggable-item {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

@@ -1,0 +1,81 @@
+.card-custom {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 15px !important;
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+}
+
+.input-custom {
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  padding-left: 2.5rem;
+}
+
+.input-custom:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+}
+
+.input-container label {
+  display: flex;
+  align-items: center;
+}
+
+.input-container .fa {
+  position: absolute !important;
+  left: 10px !important; /* Sol taraftaki boşluk */
+  top: 60%;
+  color: #6c757d !important;
+  pointer-events: none;
+}
+
+.input-container input:focus {
+  border-color: #007bff !important;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25) !important;
+}
+
+.input-container {
+  position: relative !important;
+  margin-bottom: 2rem !important;
+}
+
+.input-container input {
+  padding-left: 2.5rem !important; /* İkon ile input arasındaki boşluk */
+  border-radius: 5px !important;
+  border: 1px solid #ced4da !important;
+  transition: border-color 0.3s ease !important;
+}
+.form-feedback {
+  position: absolute !important;
+  margin-top: 1rem !important; /* Hata mesajı ile input arasındaki boşluk */
+  top: 60px !important;
+  font-size: 0.875rem !important; /* Font boyutunu ayarlamak için */
+}
+.btnLogin {
+  margin-top: 2.5rem !important;
+  display: inline-block;
+  padding: 0.75rem 1.5rem; /* Yatay ve dikey iç boşluk */
+  font-size: 1rem; /* Yazı boyutu */
+  font-weight: 600; /* Yazı kalınlığı */
+  text-align: center; /* Metni ortala */
+  text-decoration: none; /* Alt çizgiyi kaldır */
+  color: #fff; /* Yazı rengi */
+  background-color: #007bff; /* Arka plan rengi */
+  border: none; /* Kenarlık yok */
+  border-radius: 25px; /* Köşe yuvarlama */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Gölge efekti */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Geçiş efektleri */
+}
+.btnLogin:hover {
+  background-color: #0056b3 !important; /* Hover durumu için arka plan rengi */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important; /* Hover durumu için gölge efekti */
+}
