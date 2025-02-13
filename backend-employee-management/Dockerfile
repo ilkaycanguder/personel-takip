@@ -1,9 +1,10 @@
 # .NET 8 SDK ile build aşaması
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /app
+WORKDIR /src
 
 # Önce sadece .csproj dosyasını kopyala ve restore et
-COPY backend-employee-management/*.csproj ./
+COPY backend-employee-management/*.csproj backend-employee-management/
+WORKDIR /src/backend-employee-management
 RUN dotnet restore
 
 # Şimdi tüm dosyaları kopyala ve build yap
