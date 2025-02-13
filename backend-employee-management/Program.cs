@@ -16,9 +16,13 @@ namespace backend_employee_management
             var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
             var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
 
-            // Add services to the container.
+
+            // PostgreSQL baðlantýsýný ortam deðiþkeninden oku
+            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING")
+                                   ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
             builder.Services.AddDbContext<EmployeeManagementDbContext>(options =>
-                 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(connectionString));
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -52,6 +56,9 @@ namespace backend_employee_management
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            var port = Environment.GetEnvironmentVariable("PORT") ?? "8080"; // Railway'in atadýðý portu al, yoksa 8080 kullan
+            builder.WebHost.UseUrls($"http://+:{port}");
 
             var app = builder.Build();
 
