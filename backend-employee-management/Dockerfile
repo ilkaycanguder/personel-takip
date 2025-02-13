@@ -1,22 +1,22 @@
-# .NET 8 SDK ile build aşaması
+# .NET SDK kullanarak build yap
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Proje dosyalarını kopyala ve bağımlılıkları yükle
-COPY . . 
+# Proje dosyalarını kopyala
+COPY backend-employee-management/*.csproj ./
 RUN dotnet restore
+
+# Tüm dosyaları kopyala
+COPY backend-employee-management/. ./
 RUN dotnet publish -c Release -o /out
 
-# Runtime ortamını ayarla
+# Runtime ortamına geç
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /out .
 
-# Ortam değişkenlerini tanımla (PostgreSQL için)
-ENV ASPNETCORE_URLS=http://+:8080
-
-# Railway'in default portunu dinle
+# Railway'in atadığı PORT'u kullan
+ENV ASPNETCORE_URLS=http://+:${PORT}
 EXPOSE 8080
 
-# Uygulamayı başlat
 CMD ["dotnet", "backend-employee-management.dll"]
