@@ -38,3 +38,15 @@ deploy_backend:
     - curl -X POST "https://api.render.com/deploy" -H "Authorization: Bearer $RENDER_API_KEY"
   only:
     - main
+
+deploy_frontend:
+  stage: deploy
+  image: node:18
+  before_script:
+    - cd frontend-employee-management
+    - npm install -g vercel
+    - npm install
+  script:
+    - vercel --prod --token $VERCEL_AUTH_TOKEN
+  only:
+    - main
