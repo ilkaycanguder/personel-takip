@@ -16,10 +16,9 @@ namespace backend_employee_management
             var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
             var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
 
-
             // PostgreSQL baðlantýsýný ortam deðiþkeninden oku
             var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING")
-                                   ?? builder.Configuration.GetConnectionString("DefaultConnection");
+                               ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<EmployeeManagementDbContext>(options =>
                 options.UseNpgsql(connectionString));
