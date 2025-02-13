@@ -1,12 +1,12 @@
-# .NET SDK kullanarak build yap
+# .NET SDK ile build yap
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Proje dosyalarını kopyala
+# Proje dosyalarını kopyala (önce .csproj dosyasını al, sonra tüm dosyaları al)
 COPY backend-employee-management/*.csproj ./
 RUN dotnet restore
 
-# Tüm dosyaları kopyala
+# Tüm dosyaları kopyala ve publish et
 COPY backend-employee-management/. ./
 RUN dotnet publish -c Release -o /out
 
@@ -15,7 +15,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
 COPY --from=build /out .
 
-# Railway'in atadığı PORT'u kullan
+# Railway'in atadığı PORT’u kullan
 ENV ASPNETCORE_URLS=http://+:${PORT}
 EXPOSE 8080
 
