@@ -16,9 +16,18 @@ namespace backend_employee_management
             var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
             var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
 
-            // PostgreSQL baðlantýsýný ortam deðiþkeninden oku
-            var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING")
-                               ?? builder.Configuration.GetConnectionString("DefaultConnection");
+            var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            if (databaseUrl is not null)
+            {
+                var builder2 = new Npgsql.NpgsqlConnectionStringBuilder(databaseUrl)
+                {
+                    SslMode = Npgsql.SslMode.Require,
+                    TrustServerCertificate = true
+                };
+
+                databaseUrl = builder.ToString();
+            }
+            var connectionString = databaseUrl ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<EmployeeManagementDbContext>(options =>
                 options.UseNpgsql(connectionString));
@@ -56,7 +65,7 @@ namespace backend_employee_management
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var port = Environment.GetEnvironmentVariable("PORT") ?? "8080"; // Railway'in atadýðý portu al, yoksa 8080 kullan
+            var port = Environment.GetEnvironmentVariable("PORT") ?? "8080"; // Railway'in atadï¿½ï¿½ï¿½ portu al, yoksa 8080 kullan
             builder.WebHost.UseUrls($"http://+:{port}");
 
             var app = builder.Build();
@@ -64,8 +73,8 @@ namespace backend_employee_management
             // Configure the HTTP request pipeline.
             //if (app.Environment.IsDevelopment())
             //{
-                app.UseSwagger();
-                app.UseSwaggerUI();
+            app.UseSwagger();
+            app.UseSwaggerUI();
             //}
 
             app.UseHttpsRedirection();
