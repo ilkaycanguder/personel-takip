@@ -20,36 +20,26 @@ namespace backend_employee_management
 
             if (!string.IsNullOrEmpty(databaseUrl))
             {
-                databaseUrl = databaseUrl.Replace("postgres://", ""); // "postgres://" kısmını kaldır
-                var userPassHostDb = databaseUrl.Split("@"); // Kullanıcı/Parola ile Host/DB'yi ayır
-                var userPass = userPassHostDb[0].Split(":"); // Kullanıcı adı ve şifreyi ayır
-                var hostDb = userPassHostDb[1].Split("/"); // Host ve DB ismini ayır
-                var hostPort = hostDb[0].Split(":"); // Host ve Port'u ayır
+                var uri = new Uri(databaseUrl);
+                var host = uri.Host;
+                var _port = uri.Port.ToString();
+                var database = uri.AbsolutePath.Trim('/');
+                var userInfo = uri.UserInfo.Split(':');
+                var username = userInfo[0];
+                var password = userInfo[1];
 
-                var username = userPass[0];
-                var password = userPass[1];
-                var host = hostPort[0];
-                var _port = hostPort.Length > 1 ? hostPort[1] : "5432"; // Port varsa al, yoksa default 5432
-                var database = hostDb[1];
+                var connectionString = $"Host={host};Port={_port};Database={database};Username={username};Password={password};SslMode=Require;Trust Server Certificate=true;";
 
-                var connectionStringBuilder = new Npgsql.NpgsqlConnectionStringBuilder
-                {
-                    Host = host,
-                    Port = int.Parse(_port),
-                    Username = username,
-                    Password = password,
-                    Database = database,
-                    SslMode = Npgsql.SslMode.Require,
-                    TrustServerCertificate = true
-                };
-
-                databaseUrl = connectionStringBuilder.ToString();
+                builder.Services.AddDbContext<EmployeeManagementDbContext>(options =>
+                    options.UseNpgsql(connectionString));
             }
+            else
+            {
+                var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-            var connectionString = databaseUrl ?? builder.Configuration.GetConnectionString("DefaultConnection");
-
-            builder.Services.AddDbContext<EmployeeManagementDbContext>(options =>
-                options.UseNpgsql(connectionString));
+                builder.Services.AddDbContext<EmployeeManagementDbContext>(options =>
+                    options.UseNpgsql(connectionString));
+            }
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
