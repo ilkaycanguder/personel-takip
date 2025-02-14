@@ -17,16 +17,35 @@ namespace backend_employee_management
             var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
 
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            if (databaseUrl is not null)
+
+            if (!string.IsNullOrEmpty(databaseUrl))
             {
-                var builder2 = new Npgsql.NpgsqlConnectionStringBuilder(databaseUrl)
+                databaseUrl = databaseUrl.Replace("postgres://", ""); // "postgres://" kısmını kaldır
+                var userPassHostDb = databaseUrl.Split("@"); // Kullanıcı/Parola ile Host/DB'yi ayır
+                var userPass = userPassHostDb[0].Split(":"); // Kullanıcı adı ve şifreyi ayır
+                var hostDb = userPassHostDb[1].Split("/"); // Host ve DB ismini ayır
+                var hostPort = hostDb[0].Split(":"); // Host ve Port'u ayır
+
+                var username = userPass[0];
+                var password = userPass[1];
+                var host = hostPort[0];
+                var _port = hostPort.Length > 1 ? hostPort[1] : "5432"; // Port varsa al, yoksa default 5432
+                var database = hostDb[1];
+
+                var connectionStringBuilder = new Npgsql.NpgsqlConnectionStringBuilder
                 {
+                    Host = host,
+                    Port = int.Parse(_port),
+                    Username = username,
+                    Password = password,
+                    Database = database,
                     SslMode = Npgsql.SslMode.Require,
                     TrustServerCertificate = true
                 };
 
-                databaseUrl = builder.ToString();
+                databaseUrl = connectionStringBuilder.ToString();
             }
+
             var connectionString = databaseUrl ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
             builder.Services.AddDbContext<EmployeeManagementDbContext>(options =>
